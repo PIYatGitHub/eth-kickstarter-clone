@@ -1,0 +1,27 @@
+{
+  "name": "kickstarter-clone",
+  "version": "1.0.0",
+  "description": "a clone of kickstarter with a cool smart contract",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "solidity",
+    "blockchain",
+    "smart",
+    "contract",
+    "web3"
+  ],
+  "author": "Petar Yonkov (PIYAtGitHub)",
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "solc": "^0.8.26",
+    "web3": "^4.10.0"
+  },
+  "devDependencies": {
+    "ganache-cli": "^6.12.2",
+    "mocha": "^10.6.0"
+  }
+}
