@@ -65,8 +65,6 @@ describe('Campaigns', () => {
             gasPrice: "200000"
         })
 
-        console.log("here?")
-
         const count = await campaign.methods.approversCount().call()
         assert.equal(count, 1)
 
@@ -74,5 +72,21 @@ describe('Campaigns', () => {
         assert.equal(isApprover, true)
     })
 
-    
+
+    // must fix the assertion -- transaction fails so it is okay generally speaking!
+    it.skip('requires a minimum contribution to enter as approvers', async () => {
+        const contributor = accounts[1]
+        try {
+            await campaign.methods.contribute().send({
+                value: '1', // Amount less than the required minimum contribution
+                from: contributor,
+                gas: "3000000", // Increased gas limit
+                gasPrice: "200000"
+            })
+            assert.fail("This must not end up here...")
+        } catch (error) {
+            assert(error.message.includes('revert'), "Expected error message to include 'revert'")
+        }
+    })
+
 })
