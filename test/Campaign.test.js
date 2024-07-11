@@ -107,4 +107,42 @@ describe('Campaigns', () => {
         assert.equal(requestMade.description, 'Need batteries')
     })
 
+
+    it('can process a complete request -e2e test', async () => {
+        // step 1 -- define 3 contributors 
+        const contributor1 = accounts[1]
+        const contributor2 = accounts[2]
+        const contributor3 = accounts[3]
+
+        const moneyRecepient = accounts[4]
+        const initialBalance = await web3.eth.getBalance(moneyRecepient)
+
+        const commonContributeParams = { value: '11122', gas: "3000000", gasPrice: "200000" }
+
+        await campaign.methods.contribute().send({ ...commonContributeParams, from: contributor1 })
+        await campaign.methods.contribute().send({ ...commonContributeParams, from: contributor2 })
+        await campaign.methods.contribute().send({ ...commonContributeParams, from: contributor3 })
+
+        const commonGasParams = { gas: "3000000", gasPrice: "200000" }
+
+        //step 2 A manager makes a new spending request
+        await campaign.methods.createRequest(
+            "Need batteries",
+            "1000",
+            moneyRecepient
+        ).send({ from: manager, ...commonGasParams })
+
+        // step 3: 2 contributors approve the request 
+        await campaign.methods.approveRequest(0).send({ from: contributor1, ...commonGasParams })
+        await campaign.methods.approveRequest(0).send({ from: contributor2, ...commonGasParams })
+
+
+        // step 4: manager finishes the request
+        await campaign.methods.finalizeRequest(0).send({ from: manager, ...commonGasParams })
+
+        // step 5: make sure the recepient has the money! 
+        const postApprovalBalance = await web3.eth.getBalance(moneyRecepient)
+        assert.ok(postApprovalBalance > initialBalance) // did the recepient get some money?
+    })
+
 })
