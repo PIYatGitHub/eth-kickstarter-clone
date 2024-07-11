@@ -89,4 +89,22 @@ describe('Campaigns', () => {
         }
     })
 
+
+
+    it('allows a mgr to make a request', async () => {
+        await campaign.methods.createRequest(
+            "Need batteries",
+            "100",
+            accounts[2]
+        ).send({
+            from: manager,
+            gas: "3000000",
+            gasPrice: "200000"
+        })
+
+        const requestMade = await campaign.methods.requests(0).call()
+        //assert as much as we like here, I am that lazy and one is good enough for me
+        assert.equal(requestMade.description, 'Need batteries')
+    })
+
 })
