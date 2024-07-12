@@ -1,13 +1,13 @@
 const HDWalletProvider = require('@truffle/hdwallet-provider')
 const { Web3 } = require('web3')
-const compiledFactory = require("../etherium/build/CampaignFactory.json")
-require('dotenv').config({
-    path: "../.env"
-})
+const compiledFactory = require("./build/CampaignFactory.json")
+require('dotenv').config({ path: "../.env" })
 
+
+console.log("process.env.INFURA_API_KEY ", process.env.INFURA_API_KEY)
 
 const provider = new HDWalletProvider(
-    process.env.MNEUMONIC,
+    process.env.MNEMONIC,
     'https://sepolia.infura.io/v3/' + process.env.INFURA_API_KEY
 )
 
@@ -23,8 +23,9 @@ async function deploy() {
     //deploy the contract to one of them 
     const resultInstance = await new web3.eth.Contract(compiledFactory.abi)
         .deploy({ data: compiledFactory.evm.bytecode.object })
-        .send({ from: selectedAccount, gas: "3000000", gasPrice: "2000" })
+        .send({ from: selectedAccount, gas: '1000000' })
 
+    console.log("This contract just got deployed to this address!", JSON.stringify(compiledFactory.abi))
     console.log("This contract just got deployed to this address!", resultInstance.options.address)
 }
 
