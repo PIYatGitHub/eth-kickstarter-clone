@@ -4,7 +4,8 @@
   "description": "a clone of kickstarter with a cool smart contract",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start:dev": "next dev"
   },
   "keywords": [
     "solidity",
