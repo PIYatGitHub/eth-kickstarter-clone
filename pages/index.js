@@ -41,6 +41,7 @@ class CampaignIndex extends Component {
                     content="Add new campaign"
                     icon="add circle"
                     primary
+                    floated="right"
                 />
             </div>
         </Layout>
