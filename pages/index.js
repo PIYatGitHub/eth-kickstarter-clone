@@ -1,5 +1,15 @@
-import React from "react"
+import React, { Component } from "react"
+import factory from "../etherium/campaign-factory"
 
-export default () => {
-    return <h1>Root route here...</h1>
+class CampaignIndex extends Component {
+    async componentDidMount() {
+        const deployedCampaigns = await factory.methods.getDeployedCapmpaigns().call()
+        console.log("DC = ", deployedCampaigns)
+    }
+
+    render() {
+        <p>TTTTT</p>
+    }
 }
+
+export default CampaignIndex
