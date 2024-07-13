@@ -7,11 +7,13 @@ import web3 from "../../etherium/web3"
 class CampaignNew extends Component {
     state = {
         minimumContribution: '1000000',
-        requestError: ""
+        requestError: "",
+        requestLoading: false
     }
 
     onSubmit = async (e) => {
         e.preventDefault()
+        this.setState({ requestLoading: true })
         console.log("Submitting that form")
         console.log("Submitting with this amount of Wei", this.state.minimumContribution)
         try {
@@ -26,6 +28,8 @@ class CampaignNew extends Component {
             setTimeout(() => {
                 this.setState({ requestError: "" })
             }, 3500)
+        } finally {
+            this.setState({ requestLoading: false })
         }
 
     }
@@ -42,18 +46,18 @@ class CampaignNew extends Component {
                         labelPosition="right"
                         icon="money"
                         iconPosition="left"
-                        //type="number"
-                        // min={1000000}
-                        // max={1000000000000000}
-                        // step={100000}
-                        // defaultValue={1000000}
-                        value={this.state.minimumContribution}
+                        type="number"
+                        min={1000000}
+                        max={1000000000000000}
+                        step={100000}
+                        defaultValue={1000000}
+                        value={Number(this.state.minimumContribution)}
                         onChange={(e) => this.setState({ minimumContribution: e.target.value })}
                     />
 
                 </Form.Field>
 
-                <Button primary disabled={this.state.requestError !== ""}>Create!</Button>
+                <Button primary disabled={this.state.requestError !== ""} loading={this.state.requestLoading}>Create!</Button>
                 {this.state.requestError !== "" ? (
                     <Message negative header="Error!" content={this.state.requestError} />
                 ) : null}
