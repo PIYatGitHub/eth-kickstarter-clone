@@ -3,6 +3,7 @@ import Layout from "../../components/layout"
 import { Button, Form, Input, Message } from "semantic-ui-react"
 import campaignFactory from "../../etherium/campaign-factory"
 import web3 from "../../etherium/web3"
+import { Router } from "../../routes"
 
 class CampaignNew extends Component {
     state = {
@@ -23,6 +24,9 @@ class CampaignNew extends Component {
             ).send({
                 from: accounts[0]
             })
+
+            Router.pushRoute('/')
+
         } catch (error) {
             this.setState({ requestError: "Ooops something went worng. Please try again later!" })
             setTimeout(() => {
@@ -36,6 +40,7 @@ class CampaignNew extends Component {
 
     render() {
         return (<Layout>
+
             <h2>Let's go make something great!</h2>
 
             <Form onSubmit={this.onSubmit}>
