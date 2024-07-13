@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import factory from "../etherium/campaign-factory"
 import { Button, Card } from "semantic-ui-react"
+import Layout from "../components/layout"
 
 class CampaignIndex extends Component {
     static async getInitialProps() {
@@ -27,19 +28,23 @@ class CampaignIndex extends Component {
     }
 
     render() {
-        return <div>
-            <link
-                async
-                rel="stylesheet"
-                href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css"
-            />
-            {this.renderCampaigns()}
-            <Button
-                content="Add new campaign"
-                icon="add circle"
-                primary
-            />
-        </div>
+        return <Layout>
+            <div>
+                <link
+                    async
+                    rel="stylesheet"
+                    href="https://cdn.jsdelivr.net/npm/semantic-ui@2/dist/semantic.min.css"
+                />
+                <h3>Open campaigns</h3>
+                {this.renderCampaigns()}
+                <Button
+                    content="Add new campaign"
+                    icon="add circle"
+                    primary
+                />
+            </div>
+        </Layout>
+
     }
 }
 
