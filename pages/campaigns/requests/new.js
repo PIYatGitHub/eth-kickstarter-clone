@@ -29,13 +29,13 @@ class RequestForm extends Component {
 
             await campaign.methods.createRequest(
                 description,
-                web3.utils.toWei(value),
+                web3.utils.toWei(value, 'ether'),
                 recepient
             ).send({
                 from: accounts[0]
             })
         } catch (error) {
-            this.setState({ requestError: "Ooops something went worng. Please try again later!" })
+            this.setState({ requestError: "Ooops something went worng. Please try again later!" + error.message })
             setTimeout(() => {
                 this.setState({ requestError: "" })
             }, 2500)
@@ -77,6 +77,9 @@ class RequestForm extends Component {
                     <Button primary loading={this.state.requestLoading} disabled={this.state.requestError !== ""}>
                         Create!
                     </Button>
+                    {this.state.requestError !== "" ? (
+                        <Message negative header="Error!" content={this.state.requestError} />
+                    ) : null}
                 </Form>
             </Layout>
         )
