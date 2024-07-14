@@ -1,7 +1,8 @@
 import React, { Component } from "react"
-import { Button, Form, Input } from "semantic-ui-react"
+import { Button, Form, Input, Message } from "semantic-ui-react"
 import getCampaignById from "../etherium/campaign"
-
+import web3 from "../etherium/web3"
+import { Router } from "../routes"
 
 class ContributeForm extends Component {
     state = {
@@ -11,18 +12,17 @@ class ContributeForm extends Component {
     }
 
 
-    onSubmit = async () => {
+    onSubmit = async (e) => {
         e.preventDefault()
         this.setState({ requestLoading: true })
         try {
             const accounts = await web3.eth.getAccounts()
-            const campaign = getCampaignById("")
+            console.log('getting a campaign at address...', this.props.address)
+            const campaign = getCampaignById(this.props.address)
             await campaign.methods.contribute(this.state.pledge).send({
-                from: accounts[0]
+                from: accounts[0],
+                value: web3.utils.toWei(this.state.pledge, 'ether')
             })
-
-            Router.pushRoute('/')
-
         } catch (error) {
             this.setState({ requestError: "Ooops something went worng. Please try again later!" })
             setTimeout(() => {
@@ -30,15 +30,14 @@ class ContributeForm extends Component {
             }, 2500)
         } finally {
             this.setState({ requestLoading: false })
+            Router.replaceRoute(`/campaigns/${this.props.address}`)
         }
-
-
     }
 
 
     render() {
         return (
-            <Form>
+            <Form onSubmit={this.onSubmit}>
                 <Form.Field>
                     <label>Amount to contribute</label>
                     <Input
@@ -50,6 +49,9 @@ class ContributeForm extends Component {
                 <Button primary loading={this.state.requestLoading} disabled={this.state.requestError !== ""}>
                     Contribute!
                 </Button>
+                {this.state.requestError !== "" ? (
+                    <Message negative header="Error!" content={this.state.requestError} />
+                ) : null}
             </Form>
         )
     }
