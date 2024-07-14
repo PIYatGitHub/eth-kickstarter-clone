@@ -7,6 +7,7 @@
 const routes = require("next-routes")() // absolutely critical to use the second "()" since this returns a function! 
 routes.add("/campaigns/new", "/campaigns/new")
 routes.add("/campaigns/:address", "/campaigns/show")
+routes.add("/campaigns/:address/requests", "/campaigns/requests/index")
 
 
 module.exports = routes

@@ -1,9 +1,10 @@
 import React, { Component } from "react"
 import Layout from "../../components/layout"
-import { Card, Grid, Input, Message } from "semantic-ui-react"
+import { Button, Card, Grid } from "semantic-ui-react"
 import web3 from "../../etherium/web3"
 import getCampaignById from "../../etherium/campaign"
 import ContributeForm from "../../components/contribute"
+import { Link } from "../../routes"
 
 class CampaignShow extends Component {
     static async getInitialProps(props) {
@@ -73,6 +74,16 @@ class CampaignShow extends Component {
                 </Grid.Column>
                 <Grid.Column width={6}>
                     <ContributeForm address={this.props.address} />
+                </Grid.Column>
+                <Grid.Column width={16}>
+                    <Link route={`/campaigns/${this.props.address}/requests`} legacyBehavior>
+                        <a>
+                            <Button primary>
+                                View requests
+                            </Button>
+                        </a>
+                    </Link>
+
                 </Grid.Column>
             </Grid>
         </Layout>)
