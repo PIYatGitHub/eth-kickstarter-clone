@@ -34,6 +34,30 @@ class CampaignShow extends Component {
                 meta: "Each campaign has a manager. This is his address.",
                 description: "The manager is the one who made this campaign. He can make requests to withdraw money.",
                 style: { overflowWrap: 'break-word' }
+            },
+            {
+                header: minimumContribution + " [wei]",
+                meta: "Each campaign has a minimum contribution to enter and get the perks. It is measured in wei.",
+                description: "You must contributer AT LEAST that amount to become a campaign approver.",
+                style: { overflowWrap: 'break-word' }
+            },
+            {
+                header: requestsCount,
+                meta: "Each campaign can have a number of requests to complete.",
+                description: "This controls expenses and is subject to the approval of all backers.",
+                style: { overflowWrap: 'break-word' }
+            },
+            {
+                header: approversCount,
+                meta: "Each campaign can have a number of approvers.",
+                description: "This is all of you who backed that campaign by a donnation.",
+                style: { overflowWrap: 'break-word' }
+            },
+            {
+                header: web3.utils.fromWei(balance, 'ether'),
+                meta: "Each campaign has a balance. Measured in ETHER",
+                description: "This is all the money the campaign has collected.",
+                style: { overflowWrap: 'break-word' }
             }
         ]
 
