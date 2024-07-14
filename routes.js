@@ -3,7 +3,10 @@
 // Important! The default route handling is still at play too. So all routes not handled here will be handled by the default router. -_- :0 
 
 
+
 const routes = require("next-routes")() // absolutely critical to use the second "()" since this returns a function! 
+routes.add("/campaigns/new", "/campaigns/new")
+routes.add("/campaigns/:address", "/campaigns/show")
 
 
 module.exports = routes
