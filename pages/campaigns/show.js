@@ -8,10 +8,8 @@ import ContributeForm from "../../components/contribute"
 class CampaignShow extends Component {
     static async getInitialProps(props) {
         const address = props.query.address //which campaign are we interested in...
-        console.log('address is...', address)
         const campaign = getCampaignById(address)
         const data = await campaign.methods.getSummary().call()
-        console.log('data', data)
 
         return {
             minimumContribution: data[0].toString(),
@@ -19,6 +17,7 @@ class CampaignShow extends Component {
             requestsCount: data[2].toString(),
             approversCount: data[3].toString(),
             manager: data[4].toString(),
+            address
         }
     }
 
@@ -73,7 +72,7 @@ class CampaignShow extends Component {
                     {this.renderCards()}
                 </Grid.Column>
                 <Grid.Column width={6}>
-                    <ContributeForm />
+                    <ContributeForm address={this.props.address} />
                 </Grid.Column>
             </Grid>
         </Layout>)
