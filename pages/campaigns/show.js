@@ -1,13 +1,11 @@
 import React, { Component } from "react"
 import Layout from "../../components/layout"
-import { Button, Card, Form, Input, Message } from "semantic-ui-react"
-import campaignFactory from "../../etherium/campaign-factory"
+import { Card, Grid, Input, Message } from "semantic-ui-react"
 import web3 from "../../etherium/web3"
-import { Router } from "../../routes"
 import getCampaignById from "../../etherium/campaign"
+import ContributeForm from "../../components/contribute"
 
 class CampaignShow extends Component {
-    state = {}
     static async getInitialProps(props) {
         const address = props.query.address //which campaign are we interested in...
         console.log('address is...', address)
@@ -69,7 +67,18 @@ class CampaignShow extends Component {
         return (<Layout>
 
             <h2>Campaign details!</h2>
-            {this.renderCards()}
+
+            <Grid>
+                <Grid.Column width={10}>
+                    {this.renderCards()}
+                </Grid.Column>
+                <Grid.Column width={6}>
+                    <ContributeForm />
+                </Grid.Column>
+            </Grid>
+
+
+
 
         </Layout>)
     }
