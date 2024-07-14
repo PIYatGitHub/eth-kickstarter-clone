@@ -76,10 +76,6 @@ class CampaignShow extends Component {
                     <ContributeForm />
                 </Grid.Column>
             </Grid>
-
-
-
-
         </Layout>)
     }
 }

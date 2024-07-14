@@ -15,8 +15,6 @@ class CampaignNew extends Component {
     onSubmit = async (e) => {
         e.preventDefault()
         this.setState({ requestLoading: true })
-        console.log("Submitting that form")
-        console.log("Submitting with this amount of Wei", this.state.minimumContribution)
         try {
             const accounts = await web3.eth.getAccounts()
             await campaignFactory.methods.createCampaign(
