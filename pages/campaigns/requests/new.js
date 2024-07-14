@@ -3,6 +3,7 @@ import Layout from "../../../components/layout"
 import { Button, Form, Input, Message } from "semantic-ui-react"
 import getCampaignById from "../../../etherium/campaign"
 import web3 from "../../../etherium/web3"
+import { Router } from "../../../routes"
 
 class RequestForm extends Component {
     state = {
@@ -41,7 +42,7 @@ class RequestForm extends Component {
             }, 2500)
         } finally {
             this.setState({ requestLoading: false })
-            //Router.replaceRoute(`/campaigns/${this.props.address}`)
+            Router.pushRoute(`/campaigns/${this.props.address}/requests`)
         }
     }
 
