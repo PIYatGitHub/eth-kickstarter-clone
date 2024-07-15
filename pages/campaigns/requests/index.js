@@ -3,6 +3,7 @@ import Layout from "../../../components/layout"
 import { Button, Table } from "semantic-ui-react"
 import { Link } from "../../../routes"
 import getCampaignById from "../../../etherium/campaign"
+import RequestRow from "../../../components/request-row"
 
 class RequestsIndex extends Component {
     static async getInitialProps(props) {
@@ -15,9 +16,30 @@ class RequestsIndex extends Component {
             })
         )
 
-        console.log("resolved requests for len =", requestsCount, requests)
+        requests = requests.map(request => ({
+            ...request,
+            '1': request['1'].toString(),
+            '4': request['4'].toString(),
+            value: request.value.toString(),
+            approvalsCount: request.approvalsCount.toString()
+        }))
 
-        return { address, requestsCount, requests }
+        console.log('requests.... POST', requests)
+        const approvers = await campaign.methods.approversCount().call()
+        return { address, requestsCount: requestsCount.toString(), requests, approvers: approvers.toString() }
+    }
+
+    renderRows = () => {
+        console.log('working with this many requests...', this.props.requests)
+        return this.props.requests.map((request, idx) => {
+            return (<RequestRow
+                key={idx}
+                id={idx}
+                approvers={this.props.approvers}
+                request={request}
+                address={this.props.address}
+            />)
+        })
     }
 
     render() {
@@ -45,6 +67,9 @@ class RequestsIndex extends Component {
                         <HeaderCell>Finalize</HeaderCell>
                     </Row>
                 </Header>
+                <Body>
+                    {this.renderRows()}
+                </Body>
             </Table>
         </Layout>)
     }
