@@ -49,23 +49,27 @@ class RequestRow extends Component {
     render() {
         const { Row, Cell } = Table
         const { id, request, approvers } = this.props
-        const { description, value, recepient, approvalsCount } = request
+        const { description, value, recepient, approvalsCount, complete } = request
+        const readyToFinalize = approvalsCount > approvers / 2
         return (
-            <Row>
+            <Row disabled={complete} positive={readyToFinalize && !complete}>
                 <Cell>{id}</Cell>
                 <Cell>{description}</Cell>
                 <Cell>{web3.utils.fromWei(value, 'ether')}</Cell>
                 <Cell>{recepient}</Cell>
                 <Cell>{approvalsCount} / {approvers}</Cell>
                 <Cell>
-                    <Button color="green" basic onClick={this.onApprove} loading={this.state.requestLoading}>
-                        Approve
-                    </Button>
+                    {!complete ?
+                        <Button color="green" basic onClick={this.onApprove} loading={this.state.requestLoading}>
+                            Approve
+                        </Button> : null
+                    }
                 </Cell>
                 <Cell>
-                    <Button color="red" basic onClick={this.onFinalize} loading={this.state.requestLoading}>
+                    {!complete ? <Button color="red" basic onClick={this.onFinalize} loading={this.state.requestLoading}>
                         Finalize
-                    </Button>
+                    </Button> : null
+                    }
                 </Cell>
             </Row>
         )
